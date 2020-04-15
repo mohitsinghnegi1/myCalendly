@@ -2,6 +2,8 @@ import React, { Component, isValidElement } from 'react';
 import '../../assets/css/signin.css';
 import { SignInUser } from '../../services/Authentication';
 import { withRouter } from 'react-router-dom';
+import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
+import firebase from 'firebase';
 class SignIn extends Component {
   constructor(props) {
     super(props);
@@ -14,6 +16,7 @@ class SignIn extends Component {
         form: null,
       },
     };
+
     this.login = this.login.bind(this);
     this.isValid = this.isValid.bind(this);
     this.onChange = this.onChange.bind(this);
@@ -51,6 +54,22 @@ class SignIn extends Component {
     // console.log(this.state);
   }
   render() {
+    var uiConfig = {
+      callbacks: {
+        signInSuccess: () => false,
+      },
+      // Will use popup for IDP Providers sign-in flow instead of the default, redirect.
+      signInFlow: 'popup',
+      // signInSuccessUrl: '/',
+      signInOptions: [
+        // Leave the lines as is for the providers you want to offer your users.
+        firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+        firebase.auth.FacebookAuthProvider.PROVIDER_ID,
+
+        firebase.auth.GithubAuthProvider.PROVIDER_ID,
+        firebase.auth.EmailAuthProvider.PROVIDER_ID,
+      ],
+    };
     return (
       <div className='row d-flex mt-5'>
         <div className='col-md-5 m-auto  w-100 bg-white'>
@@ -82,19 +101,6 @@ class SignIn extends Component {
               />
             </div>
 
-            <div className='form-group'>
-              <div className='custom-control custom-checkbox'>
-                <input
-                  type='checkbox'
-                  className='custom-control-input'
-                  id='customCheck1'
-                />
-                <label className='custom-control-label' htmlFor='customCheck1'>
-                  Remember me
-                </label>
-              </div>
-            </div>
-
             <button type='submit' className='btn btn-primary btn-block'>
               Submit
             </button>
@@ -107,6 +113,11 @@ class SignIn extends Component {
                 Create account
               </span>
             </span>
+
+            <StyledFirebaseAuth
+              uiConfig={uiConfig}
+              firebaseAuth={firebase.auth()}
+            />
           </form>
         </div>
       </div>

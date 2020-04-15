@@ -9,6 +9,7 @@ import PublicRoutes from './config/PublicRoutes';
 import PrivateRoutes from './config/PrivateRoutes';
 import Home from './components/homepage/Home';
 import fire from './config/fbConfig';
+
 class App extends React.Component {
   constructor() {
     super();
@@ -25,6 +26,7 @@ class App extends React.Component {
     fire.auth().onAuthStateChanged(function (user) {
       if (user) {
         // user is signed in
+        console.log(user);
         that.setState({ user });
       } else {
         that.setState({ user: null });
