@@ -35,7 +35,7 @@ class SignIn extends Component {
       response
         .then((data) => {
           console.log('User is authorised', data);
-          this.props.history.push('/Home');
+          // this.props.history.push('/Home');
         })
         .catch((error) => {
           console.log('Login error ', error);
@@ -98,10 +98,19 @@ class SignIn extends Component {
             <button type='submit' className='btn btn-primary btn-block'>
               Submit
             </button>
+            <span>
+              New user ?{' '}
+              <span
+                onClick={() => {
+                  this.props.history.push('/SignUp');
+                }}>
+                Create account
+              </span>
+            </span>
           </form>
         </div>
       </div>
     );
   }
 }
-export default withRouter(SignIn);
+export default SignIn;

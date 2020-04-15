@@ -5,19 +5,41 @@ import SignUp from './components/signup/SignUp';
 import 'bootstrap/dist/css/bootstrap.css';
 import './App.css';
 import SignIn from './components/signin/SignIn';
+import PublicRoutes from './config/PublicRoutes';
+import PrivateRoutes from './config/PrivateRoutes';
 import Home from './components/homepage/Home';
-function App() {
-  return (
-    <div className='App container-fluid  '>
+import fire from './config/fbConfig';
+class App extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      user: null,
+    };
+    this.authListener = this.authListener.bind(this);
+  }
+  componentDidMount() {
+    this.authListener();
+  }
+  authListener() {
+    var that = this;
+    fire.auth().onAuthStateChanged(function (user) {
+      if (user) {
+        // user is signed in
+        that.setState({ user });
+      } else {
+        that.setState({ user: null });
+      }
+    });
+  }
+  render() {
+    return (
       <BrowserRouter>
-        <Switch>
-          <Route exact path='/' component={SignIn}></Route>
-          <Route exact path='/SignUp' component={SignUp}></Route>
-          <Route exact path='/Home' component={Home}></Route>
-        </Switch>
+        <div className='App container-fluid  '>
+          {this.state.user ? <PrivateRoutes /> : <PublicRoutes />}
+        </div>
       </BrowserRouter>
-    </div>
-  );
+    );
+  }
 }
 
 export default App;

@@ -1,7 +1,7 @@
 import React, { Component, isValidElement } from 'react';
 import '../../assets/css/signin.css';
 import { CreateUser } from '../../services/Authentication';
-export default class SignIn extends Component {
+export default class SignUp extends Component {
   constructor() {
     super();
     this.state = {
@@ -29,10 +29,12 @@ export default class SignIn extends Component {
     if (this.isValid()) {
       console.log('call to signup api which will return promise');
       var response = CreateUser(this.state);
+      var that = this;
       response
         .then((data) => {
           console.log('reponse is resolved ', data);
           alert('User Registered Successfully');
+          that.props.history.push('/');
         })
         .catch((error) => {
           // Handle Errors here.
@@ -94,6 +96,10 @@ export default class SignIn extends Component {
             <button type='submit' className='btn btn-primary btn-block'>
               Submit
             </button>
+            <span>
+              Already have a account?
+              <span onClick={() => this.props.history.push('/')}>Login</span>
+            </span>
           </form>
         </div>
       </div>
