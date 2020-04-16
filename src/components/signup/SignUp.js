@@ -52,56 +52,59 @@ export default class SignUp extends Component {
   }
   render() {
     return (
-      <div className='row d-flex mt-5'>
-        <div className='col-md-5 m-auto  w-100 bg-white'>
-          <form onSubmit={this.SubmitForm}>
-            <h3>Sign Up</h3>
-            <div className='error'>{this.state.errors.form}</div>
-            <div className='form-group'>
-              <label>Email address</label>
+      <div className='row vw-100 ml-0 mr-0'>
+        <div class='login100-more back col-lg-7 d-none d-lg-block'></div>
+        <form
+          autoComplete='none'
+          class='login100-form validate-form col-lg-5 pt-0 pb-0  pl-md-5 pr-md-5 d-flex '
+          onSubmit={this.SubmitForm}>
+          <span class='login100-form-title p-b-34'>Create Account</span>
+
+          <div className='error mb-3'>{this.state.errors.form}</div>
+          <div className='d-md-flex'>
+            <div
+              class='wrap-input100 rs1-wrap-input100 validate-input m-b-20'
+              data-validate='Type user name'>
               <input
-                onChange={this.onChange}
+                autoComplete='none'
+                id='email'
+                class='input100'
                 type='email'
                 name='email'
-                className='form-control'
-                placeholder='Enter email'
-              />
-            </div>
-
-            <div className='form-group'>
-              <label>Password</label>
-
-              <input
+                placeholder='Email Address'
                 onChange={this.onChange}
+              />
+              <span class='focus-input100'></span>
+            </div>
+            <div
+              class='wrap-input100 rs2-wrap-input100 validate-input m-b-20'
+              data-validate='Type password'>
+              <input
+                autoComplete='new-password'
+                class='input100'
                 type='password'
                 name='password'
-                className='form-control'
-                placeholder='Enter password'
+                placeholder='Password'
+                onChange={this.onChange}
               />
+              <span class='focus-input100'></span>
             </div>
+          </div>
+          <div class='container-login100-form-btn'>
+            <input type='submit' class='login100-form-btn' value='Sign Up' />
+          </div>
 
-            <div className='form-group'>
-              <div className='custom-control custom-checkbox'>
-                <input
-                  type='checkbox'
-                  className='custom-control-input'
-                  id='customCheck1'
-                />
-                <label className='custom-control-label' htmlFor='customCheck1'>
-                  Remember me
-                </label>
-              </div>
-            </div>
-
-            <button type='submit' className='btn btn-primary btn-block'>
-              Submit
-            </button>
-            <span>
-              Already have a account?
-              <span onClick={() => this.props.history.push('/')}>Login</span>
+          <div class='w-full text-center mt-5'>
+            <span
+              onClick={() => {
+                console.log(this.props);
+                this.props.updateWidget({ widgetName: 'SIGNIN' });
+              }}
+              class='txt3 cur-pointer'>
+              Sign In
             </span>
-          </form>
-        </div>
+          </div>
+        </form>
       </div>
     );
   }

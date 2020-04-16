@@ -2,8 +2,11 @@ import React, { Component, isValidElement } from 'react';
 import '../../assets/css/signin.css';
 import { SignInUser } from '../../services/Authentication';
 import { withRouter } from 'react-router-dom';
+
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
 import firebase from 'firebase';
+import '../../assets/css/util.css';
+import '../../assets/css/signin.css';
 class SignIn extends Component {
   constructor(props) {
     super(props);
@@ -45,6 +48,8 @@ class SignIn extends Component {
           var errMsg = error.message;
           this.setState({ errors: { form: errMsg } });
         });
+    } else {
+      console.log('invalid val', this.state);
     }
   }
   onChange(e) {
@@ -71,57 +76,73 @@ class SignIn extends Component {
       ],
     };
     return (
-      <div className='row d-flex mt-5'>
-        <div className='col-md-5 m-auto  w-100 bg-white'>
-          <form onSubmit={this.login}>
-            <h3>Sign In</h3>
-            <div className='error'>{this.state.errors.form}</div>
-            <div className='form-group'>
-              <label>Email address</label>
+      <div className='row vw-100 ml-0 mr-0'>
+        <div class='login100-more back col-lg-7 d-none d-lg-block'></div>
+        <form
+          autoComplete='none'
+          class='login100-form validate-form col-lg-5 pt-0 pb-0  pl-md-5 pr-md-5 d-flex '
+          onSubmit={this.login}>
+          <span class='login100-form-title p-b-34'>Account Login</span>
+          <StyledFirebaseAuth
+            uiConfig={uiConfig}
+            firebaseAuth={firebase.auth()}
+          />
+          <h4 className='sep mb-4'>&nbsp;OR&nbsp;</h4>
+          <div className='error mb-3'>{this.state.errors.form}</div>
+          <div className='d-md-flex'>
+            <div
+              class='wrap-input100 rs1-wrap-input100 validate-input m-b-20'
+              data-validate='Type user name'>
               <input
-                onChange={this.onChange}
+                autoComplete='none'
+                id='email'
+                class='input100'
                 type='email'
                 name='email'
-                className='form-control'
-                placeholder='Enter email'
-              />
-            </div>
-
-            <div className='form-group'>
-              <label>Password</label>
-              <span className='forgot-password text-right float-right'>
-                Forgot <a href='#'>password?</a>
-              </span>
-              <input
+                placeholder='Email Address'
                 onChange={this.onChange}
+              />
+              <span class='focus-input100'></span>
+            </div>
+            <div
+              class='wrap-input100 rs2-wrap-input100 validate-input m-b-20'
+              data-validate='Type password'>
+              <input
+                autoComplete='new-password'
+                class='input100'
                 type='password'
                 name='password'
-                className='form-control'
-                placeholder='Enter password'
+                placeholder='Password'
+                onChange={this.onChange}
               />
+              <span class='focus-input100'></span>
             </div>
+          </div>
+          <div class='container-login100-form-btn'>
+            <input type='submit' class='login100-form-btn' value='Sign In' />
+          </div>
 
-            <button type='submit' className='btn btn-primary btn-block'>
-              Submit
-            </button>
-            <span>
-              New user ?{' '}
-              <span
-                onClick={() => {
-                  this.props.history.push('/SignUp');
-                }}>
-                Create account
-              </span>
+          <div class='w-full text-center p-t-27 p-b-10 cur-pointer'>
+            <span class='txt1'>Forgot&nbsp;</span>
+
+            <a href='#' class='txt2'>
+              password?
+            </a>
+          </div>
+
+          <div class='w-full text-center'>
+            <span
+              onClick={() => {
+                console.log(this.props);
+                this.props.updateWidget({ widgetName: 'SIGNUP' });
+              }}
+              class='txt3 cur-pointer'>
+              Sign Up
             </span>
-
-            <StyledFirebaseAuth
-              uiConfig={uiConfig}
-              firebaseAuth={firebase.auth()}
-            />
-          </form>
-        </div>
+          </div>
+        </form>
       </div>
     );
   }
 }
-export default SignIn;
+export default withRouter(SignIn);

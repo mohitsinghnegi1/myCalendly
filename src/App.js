@@ -36,7 +36,7 @@ class App extends React.Component {
   render() {
     return (
       <BrowserRouter>
-        <div className='App container-fluid  '>
+        <div className='App  '>
           {this.state.user ? <PrivateRoutes /> : <PublicRoutes />}
         </div>
       </BrowserRouter>
