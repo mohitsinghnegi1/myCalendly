@@ -2,7 +2,7 @@ import React, { Component, isValidElement } from 'react';
 import '../../assets/css/signin.css';
 import { SignInUser } from '../../services/Authentication';
 import { withRouter } from 'react-router-dom';
-
+import logo from '.././../assets/img/logo.png';
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
 import firebase from 'firebase';
 import '../../assets/css/util.css';
@@ -13,6 +13,7 @@ class SignIn extends Component {
     this.state = {
       email: '',
       password: '',
+      submitText: 'SignIn',
       errors: {
         email: null,
         password: null,
@@ -33,19 +34,29 @@ class SignIn extends Component {
 
   login(e) {
     e.preventDefault();
+    this.setState({
+      submitText: 'Loading',
+    });
     if (this.isValid()) {
       console.log('add new login to firestore');
       console.log(this.state);
       var response = SignInUser(this.state);
+
       console.log('signin call happended');
       response
         .then((data) => {
           console.log('User is authorised', data);
+          this.setState({
+            submitText: 'SignIn',
+          });
           // this.props.history.push('/Home');
         })
         .catch((error) => {
           console.log('Login error ', error);
           var errMsg = error.message;
+          this.setState({
+            submitText: 'SignIn',
+          });
           this.setState({ errors: { form: errMsg } });
         });
     } else {
@@ -58,6 +69,8 @@ class SignIn extends Component {
     this.setState({ [name]: value });
     // console.log(this.state);
   }
+
+  componentDidMount() {}
   render() {
     var uiConfig = {
       callbacks: {
@@ -77,7 +90,23 @@ class SignIn extends Component {
     };
     return (
       <div className='row vw-100 ml-0 mr-0'>
-        <div class='login100-more back col-lg-7 d-none d-lg-block'></div>
+        <div className='text-white logo'>
+          <img src={logo} className='ml-5 pl-3 ' alt='calendly' />
+          Calendly
+        </div>
+        <div class='login100-more back col-lg-7 d-none d-lg-block'>
+          <div className='row m-auto' style={{ height: '100%' }}>
+            <div className='m-auto p-5'>
+              <div className='welcome-text text-uppercase'>
+                welcome to Calendly
+              </div>
+              <div className='wel-description'>
+                Calendly helps you schedule meetings without the
+                <br /> back-and-forth emails .
+              </div>
+            </div>
+          </div>
+        </div>
         <form
           autoComplete='none'
           class='login100-form validate-form col-lg-5 pt-0 pb-0  pl-md-5 pr-md-5 d-flex '
@@ -88,7 +117,7 @@ class SignIn extends Component {
             firebaseAuth={firebase.auth()}
           />
           <h4 className='sep mb-4'>&nbsp;OR&nbsp;</h4>
-          <div className='error mb-3'>{this.state.errors.form}</div>
+          <div className='error text-center mb-3'>{this.state.errors.form}</div>
           <div className='d-md-flex'>
             <div
               class='wrap-input100 rs1-wrap-input100 validate-input m-b-20'
@@ -119,7 +148,9 @@ class SignIn extends Component {
             </div>
           </div>
           <div class='container-login100-form-btn'>
-            <input type='submit' class='login100-form-btn' value='Sign In' />
+            <button type='submit' class='login100-form-btn'>
+              {this.state.submitText}
+            </button>
           </div>
 
           <div class='w-full text-center p-t-27 p-b-10 cur-pointer'>

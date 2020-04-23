@@ -30,6 +30,7 @@
   src: url('../fonts/montserrat/Montserrat-Bold.ttf');
 }
 
+@import url('https://fonts.googleapis.com/css?family=Archivo+Black&display=swap');
 /*//////////////////////////////////////////////////////////////////
 [ RESTYLE TAG ]*/
 
@@ -224,6 +225,7 @@ a.txt2:hover {
   display: flex;
   flex-wrap: wrap;
   align-items: stretch;
+
   flex-direction: row-reverse;
 }
 
@@ -563,8 +565,9 @@ input.input100 {
 }
 .back {
   background-image: url('../img/meeting.jpg');
-  background-image: linear-gradient(0deg, rgba(2, 59, 28, 0.651), #00ad5f79),
-    url('../img/meeting.jpg');
+
+  background-image: linear-gradient(90deg, rgba(13, 14, 13, 0.651), #181d1a79),
+    url('../img//meeting.jpg');
   background-size: cover;
   background-position: center;
 
@@ -575,4 +578,31 @@ input.input100 {
 }
 .cur-pointer {
   cursor: pointer;
+}
+.welcome-text {
+  font-family: 'Archivo Black', sans-serif;
+  font-size: 50px;
+
+  font-weight: 500;
+  color: #00ad5f;
+  line-height: 1.2;
+  margin-bottom: 24px;
+}
+.wel-description {
+  color: #fff;
+  font-size: 20px;
+  line-height: 1.5;
+  letter-spacing: 1.9;
+  font-family: sans-serif;
+}
+.logo {
+  position: absolute;
+  margin-top: 20px;
+  z-index: 2;
+  padding-left: 10px;
+  font-weight: 600;
+}
+.logo img {
+  height: 30px !important;
+  margin-right: 10px;
 }
